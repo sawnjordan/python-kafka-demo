@@ -1,11 +1,19 @@
 import json
 from kafka import KafkaConsumer
-
 from constants import ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
-
+# Create a Kafka consumer instance
 def create_consumer(topic, servers):
-    """Create and return a Kafka consumer instance."""
+    """
+    Create and return a Kafka consumer instance.
+    
+    Args:
+        topic (str): The Kafka topic to consume from.
+        servers (str): Comma-separated list of Kafka bootstrap servers.
+    
+    Returns:
+        KafkaConsumer: The Kafka consumer instance.
+    """
     return KafkaConsumer(
         topic,
         bootstrap_servers=servers,
@@ -15,7 +23,12 @@ def create_consumer(topic, servers):
     )
 
 def process_message(message):
-    """Process each Kafka message and update analytics."""
+    """
+    Process each Kafka message and update analytics.
+    
+    Args:
+        message (KafkaConsumerMessage): The Kafka message to process.
+    """
     global total_orders_count, total_revenue
     try:
         consumed_message = json.loads(message.value.decode())
@@ -34,7 +47,9 @@ def process_message(message):
         print(f"An error occurred: {e}")
 
 def main():
-    """Main function to start the Kafka consumer and process messages."""
+    """
+    Main function to start the Kafka consumer and process messages.
+    """
     global total_orders_count, total_revenue
 
     total_orders_count = 0

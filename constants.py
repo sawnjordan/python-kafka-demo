@@ -1,4 +1,4 @@
-# constants.py
+"""This module contains constants used in the application."""
 
 ORDER_KAFKA_TOPIC = "order_details"
 ORDER_CONFIRMED_KAFKA_TOPIC = "order_confirmed"

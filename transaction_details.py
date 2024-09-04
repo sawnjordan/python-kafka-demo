@@ -1,8 +1,11 @@
+"""This module processes Kafka messages related to transactions and confirms them."""
+
 import json
 from kafka import KafkaConsumer, KafkaProducer
 from constants import ORDER_KAFKA_TOPIC, ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
 def main():
+    """Main function to consume messages from Kafka and produce confirmation messages."""
     consumer = KafkaConsumer(
         ORDER_KAFKA_TOPIC,
         bootstrap_servers=BOOTSTRAP_SERVERS,
@@ -33,6 +36,8 @@ def main():
     
     except KeyboardInterrupt:
         print("Interrupted. Closing connections...")
+    except Exception as e:
+        print(f"An error occurred: {e}")
     
     finally:
         # Properly close the producer and consumer
