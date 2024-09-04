@@ -19,7 +19,7 @@ def create_consumer(topic, servers):
         bootstrap_servers=servers,
         auto_offset_reset='earliest',  # Start from the earliest message
         enable_auto_commit=True,       # Auto-commit offsets
-        group_id='analytics-group'     # Consumer group ID
+        group_id='analytics-group'     # Consumer group ID 
     )
 
 def process_message(message):
