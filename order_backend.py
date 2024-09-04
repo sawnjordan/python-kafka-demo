@@ -2,21 +2,19 @@ import json
 import time
 
 from kafka import KafkaProducer
-
-ORDER_KAFKA_TOPIC = "order_details"
-ORDER_LIMIT = 10
+from constants import ORDER_KAFKA_TOPIC,ORDER_LIMIT
 
 producer = KafkaProducer(bootstrap_servers="localhost:9092")
 
 print("Going to be generating order after 3 seconds")
 print("Will generate one unique order every 3 seconds")
-time.sleep(5)
+time.sleep(3)
 
 for i in range(1, ORDER_LIMIT):
     data = {
         "order_id": i,
-        "user_id": f"sanjog_{i}",
-        "total_cost": i * 5,
+        "user_id": f"sanjog_lama_{i}",
+        "total_cost": i * 50,
         "items": "burger,sandwich",
     }
 
