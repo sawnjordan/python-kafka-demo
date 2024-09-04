@@ -33,3 +33,15 @@
 - Run order backend
 
   `python3 order_details.py`
+
+### To check the list of topics
+
+```
+docker exec -it <container_id> kafka-topics --list --bootstrap-server localhost:9092
+```
+
+### To delete topics
+
+```
+docker exec -it <container_id> kafka-topics --delete --topic <topic_name> --bootstrap-server localhost:9092
+```
