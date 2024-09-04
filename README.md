@@ -18,6 +18,10 @@
 
   `docker compose up -d`
 
+- Run api to get random order details
+
+  `python3 api.py`
+
 - Run email service
 
   `python3 email_service.py`
