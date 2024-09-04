@@ -18,10 +18,14 @@
 
   `docker compose up -d`
 
-- Run order backend
+- Run email service
 
-  `python3 order_backend.py`
+  `python3 email_service.py`
 
 - Run transaction backend
 
-  `python3 transaction.py`
+  `python3 transaction_details.py`
+
+- Run order backend
+
+  `python3 order_details.py`
