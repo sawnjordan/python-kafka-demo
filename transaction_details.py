@@ -1,16 +1,16 @@
 import json
 from kafka import KafkaConsumer, KafkaProducer
-from constants import ORDER_KAFKA_TOPIC, ORDER_CONFIRMED_KAFKA_TOPIC
+from constants import ORDER_KAFKA_TOPIC, ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
 def main():
     consumer = KafkaConsumer(
         ORDER_KAFKA_TOPIC,
-        bootstrap_servers="localhost:9092",
+        bootstrap_servers=BOOTSTRAP_SERVERS,
         group_id="order-processing-group",  # Specify the group ID
         auto_offset_reset='earliest',       # Start reading from the beginning of the topic
     )
     
-    producer = KafkaProducer(bootstrap_servers="localhost:9092")
+    producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVERS)
 
     try:
         print("Gonna start listening")

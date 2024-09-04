@@ -2,12 +2,12 @@ import json
 import signal
 import sys
 from kafka import KafkaConsumer
-from constants import ORDER_CONFIRMED_KAFKA_TOPIC
+from constants import ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
 # Initialize Kafka consumer
 consumer = KafkaConsumer(
     ORDER_CONFIRMED_KAFKA_TOPIC,
-    bootstrap_servers="localhost:9092",
+    bootstrap_servers=BOOTSTRAP_SERVERS,
     auto_offset_reset='earliest',  # Start reading from the earliest message
     enable_auto_commit=True,       # Auto-commit offsets
     group_id='email-sender-group'  # Consumer group ID
