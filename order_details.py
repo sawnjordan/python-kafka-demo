@@ -48,7 +48,6 @@ def main():
                 print(f"Error sending message to Kafka: {e}")
         else:
             print("No data to send to Kafka")
-        
         time.sleep(3)
 
 
