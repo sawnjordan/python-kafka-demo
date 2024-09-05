@@ -6,6 +6,10 @@ import json
 from kafka import KafkaConsumer
 from constants import ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
+# Define global variables at the module level
+total_orders_count = 0
+total_revenue = 0
+
 # Create a Kafka consumer instance
 def create_consumer(topic, servers):
     """
@@ -34,8 +38,7 @@ def process_message(message):
         message (KafkaConsumerMessage): The Kafka message to process.
     """
     global total_orders_count, total_revenue
-    total_orders_count = 0
-    total_revenue = 0
+
     try:
         consumed_message = json.loads(message.value.decode())
         total_cost = float(consumed_message.get("total_cost", 0))  # Default to 0 if key is missing
@@ -48,6 +51,7 @@ def process_message(message):
     except (json.JSONDecodeError, KeyError):
         print("Error decoding JSON message or missing 'total_cost' field")
     except Exception as e:
+        # Broad catch for unexpected exceptions, if absolutely needed
         print(f"An error occurred: {e}")
 
 def main():
@@ -70,4 +74,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

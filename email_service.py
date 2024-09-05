@@ -16,10 +16,10 @@ consumer = kafka.KafkaConsumer(
 # Set to track unique emails
 emails_sent_so_far = set()
 
-def process_message(message):
+def process_message(kafka_message):
     """Process each Kafka message to send emails."""
     try:
-        consumed_message = json.loads(message.value.decode())
+        consumed_message = json.loads(kafka_message.value.decode())
         customer_email = consumed_message.get("customer_email")
         if customer_email:
             print(f"Sending email to {customer_email}")
@@ -37,9 +37,6 @@ print("Gonna start listening")
 try:
     for message in consumer:
         process_message(message)
-except Exception as e:
-    print(f"Consumer error: {e}")
 finally:
     consumer.close()
     print("Consumer closed")
-

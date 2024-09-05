@@ -1,3 +1,7 @@
+"""
+This module fetches order data from an API and sends it to a Kafka topic.
+"""
+
 import json
 import time
 import requests
@@ -34,13 +38,13 @@ def main():
     print("Will generate one unique order every 3 seconds")
     time.sleep(3)
 
-    for i in range(ORDER_LIMIT):
+    for _ in range(ORDER_LIMIT):
         data = fetch_order_data()
         if data:
             try:
                 producer.send(ORDER_KAFKA_TOPIC, json.dumps(data).encode("utf-8"))
                 print(f"Done Sending Order ID {data.get('order_id', 'unknown')}")
-            except Exception as e:
+            except kafka.errors.KafkaError as e:  # Catch specific KafkaError
                 print(f"Error sending message to Kafka: {e}")
         else:
             print("No data to send to Kafka")
@@ -50,4 +54,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

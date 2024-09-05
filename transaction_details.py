@@ -1,12 +1,14 @@
-"""This module processes Kafka messages related to transactions and confirms them."""
+"""
+This module processes Kafka messages related to transactions and confirms them.
+"""
 
 import json
 from kafka import KafkaConsumer, KafkaProducer
 from constants import ORDER_KAFKA_TOPIC, ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
-
-
 def main():
-    """Main function to consume messages from Kafka and produce confirmation messages."""
+    """
+    Main function to consume messages from Kafka and produce confirmation messages.
+    """
     consumer = KafkaConsumer(
         ORDER_KAFKA_TOPIC,
         bootstrap_servers=BOOTSTRAP_SERVERS,
@@ -22,18 +24,26 @@ def main():
             print("Ongoing transaction..")
             consumed_message = json.loads(message.value.decode())
             print(consumed_message)
+
+            # Extract user_id and total_cost from the message
             user_id = consumed_message.get("user_id")
             total_cost = consumed_message.get("total_cost")
 
             if user_id is not None and total_cost is not None:
-                data = {
+                # Create confirmation message
+                confirmation_data = {
                     "customer_id": user_id,
                     "customer_email": f"{user_id}@gmail.com",
                     "total_cost": total_cost
                 }
                 print("Successful transaction..")
-                producer.send(ORDER_CONFIRMED_KAFKA_TOPIC, json.dumps(data).encode("utf-8"))
-                producer.flush()  # Ensure messages are sent before continuing
+                # Send confirmation message to Kafka topic
+                producer.send(
+                    ORDER_CONFIRMED_KAFKA_TOPIC,
+                    json.dumps(confirmation_data).encode("utf-8")
+                )
+                # Ensure messages are sent before continuing
+                producer.flush()
 
     except KeyboardInterrupt:
         print("Interrupted. Closing connections...")
@@ -49,4 +59,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
