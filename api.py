@@ -11,10 +11,11 @@ def get_order():
     order = {
         "order_id": random.randint(1, 1000),
         "user_id": f"user_{random.randint(1, 1000)}",
-        "total_cost": random.uniform(10.0, 100.0),
+        "total_cost": round(random.uniform(10.0, 100.0), 2),
         "items": "burger,sandwich"
     }
     return jsonify(order)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+

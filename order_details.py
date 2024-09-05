@@ -25,6 +25,7 @@ def fetch_order_data():
         print(f"Error fetching data from API: {e}")
         return None
 
+
 def main():
     """
     Main function to generate orders and send them to Kafka.
@@ -46,5 +47,7 @@ def main():
         
         time.sleep(3)
 
+
 if __name__ == "__main__":
     main()
+

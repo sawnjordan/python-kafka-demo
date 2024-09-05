@@ -1,11 +1,11 @@
 """This module handles sending emails based on Kafka messages."""
 
 import json
-from kafka import KafkaConsumer
+import kafka
 from constants import ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
 # Initialize Kafka consumer
-consumer = KafkaConsumer(
+consumer = kafka.KafkaConsumer(
     ORDER_CONFIRMED_KAFKA_TOPIC,
     bootstrap_servers=BOOTSTRAP_SERVERS,
     auto_offset_reset='earliest',
@@ -29,8 +29,8 @@ def process_message(message):
             print("Received message without 'customer_email' field")
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON message: {e}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except kafka.errors.KafkaError as e:
+        print(f"Kafka error occurred: {e}")
 
 print("Gonna start listening")
 
@@ -42,3 +42,4 @@ except Exception as e:
 finally:
     consumer.close()
     print("Consumer closed")
+
