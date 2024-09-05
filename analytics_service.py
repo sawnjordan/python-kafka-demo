@@ -7,14 +7,14 @@ from kafka import KafkaConsumer, errors
 from constants import ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
 
-class AnalyticsService:
+class KafkaAnalyticsService:
     """
     A service that consumes Kafka messages to update order analytics.
     """
 
     def __init__(self, topic: str, servers: str):
         """
-        Initialize the AnalyticsService with Kafka consumer.
+        Initialize the KafkaAnalyticsService with Kafka consumer.
 
         Args:
             topic (str): The Kafka topic to consume from.
@@ -78,7 +78,7 @@ def main():
     """
     Main function to start the AnalyticsService.
     """
-    service = AnalyticsService(ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS)
+    service = KafkaAnalyticsService(ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS)
     service.run()
 
 
