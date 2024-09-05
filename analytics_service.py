@@ -3,7 +3,7 @@ Analytics service to consume Kafka messages and update analytics.
 """
 
 import json
-from kafka import KafkaConsumer, KafkaError
+from kafka import KafkaConsumer, errors
 from constants import ORDER_CONFIRMED_KAFKA_TOPIC, BOOTSTRAP_SERVERS
 
 
@@ -52,7 +52,7 @@ class AnalyticsService:
             print("Error decoding JSON message.")
         except KeyError:
             print("Missing 'total_cost' field in the message.")
-        except KafkaError as e:
+        except errors.KafkaError as e:
             print(f"Kafka error occurred: {e}")
         except Exception as e:
             # Log unexpected exceptions
