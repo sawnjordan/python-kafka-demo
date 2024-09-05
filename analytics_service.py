@@ -39,7 +39,9 @@ class AnalyticsService:
         """
         try:
             consumed_message = json.loads(message.value.decode())
-            total_cost = float(consumed_message.get("total_cost", 0))  # Default to 0 if key is missing
+            total_cost = float(
+                consumed_message.get("total_cost", 0)  # Default to 0 if key is missing
+            )
             self.total_orders_count += 1
             self.total_revenue += total_cost
 

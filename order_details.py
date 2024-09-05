@@ -5,7 +5,7 @@ This module fetches order data from an API and sends it to a Kafka topic.
 import json
 import time
 import requests
-from kafka import KafkaProducer
+from kafka import KafkaProducer, errors  # Import KafkaError
 from constants import ORDER_KAFKA_TOPIC, ORDER_LIMIT, BOOTSTRAP_SERVERS
 
 # Initialize Kafka producer
@@ -22,7 +22,7 @@ def fetch_order_data():
         dict: Order data if request is successful, else None.
     """
     try:
-        response = requests.get(API_URL)
+        response = requests.get(API_URL, timeout=5)  # Added timeout to prevent hanging
         response.raise_for_status()  # Raise HTTPError for bad responses
         return response.json()
     except requests.RequestException as e:
@@ -44,7 +44,7 @@ def main():
             try:
                 producer.send(ORDER_KAFKA_TOPIC, json.dumps(data).encode("utf-8"))
                 print(f"Done Sending Order ID {data.get('order_id', 'unknown')}")
-            except kafka.errors.KafkaError as e:  # Catch specific KafkaError
+            except errors.KafkaError as e:  # Catch specific KafkaError
                 print(f"Error sending message to Kafka: {e}")
         else:
             print("No data to send to Kafka")
